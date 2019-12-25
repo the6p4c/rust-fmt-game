@@ -1,0 +1,35 @@
+{
+	"problems": [
+		{
+			"name": "Intro",
+			"description": "Simple to start off. Brush up now, while you can!",
+			"variations": [
+				"format!(\"{} {}\", \"hello\", \"world\")"
+			]
+		},
+		{
+			"name": "Positional",
+			"description": "Non-positional parameters are easy, but there's a world of fun to be discovered with positional parameters.",
+			"variations": [
+				"format!(\"{0}{1}{0}\", \"hello\", \"world\")",
+				"format!(\"{1}{0}{1}\", \"hello\", \"world\")",
+				"format!(\"{0}{1}{0}\", \"world\", \"hello\")",
+				"format!(\"{1}{0}{1}\", \"world\", \"hello\")"
+			]
+		},
+		{
+			"name": "Positional 2",
+			"description": "Surely we can't use non-positional and positional parameters in the same format string... right?",
+			"variations": [
+				"format!(\"{1} {} {0} {}\", 10, 20)",
+				"format!(\"{0} {} {1} {}\", 10, 20)",
+				"format!(\"{} {1} {} {0}\", 10, 20)",
+				"format!(\"{} {0} {} {1}\", 10, 20)",
+				"format!(\"{1} {} {0} {}\", 20, 10)",
+				"format!(\"{0} {} {1} {}\", 20, 10)",
+				"format!(\"{} {1} {} {0}\", 20, 10)",
+				"format!(\"{} {0} {} {1}\", 20, 10)"
+			]
+		}
+	]
+}
