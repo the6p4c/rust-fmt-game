@@ -137,7 +137,7 @@ function getResults(variations) {
 	});
 }
 
-const CHUNK_SIZE = 50;
+const CHUNK_SIZE = 200;
 
 const LEVELS_FILE = 'levels.json';
 const levels = JSON.parse(fs.readFileSync(LEVELS_FILE, 'utf8')).levels;
