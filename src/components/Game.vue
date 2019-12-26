@@ -109,6 +109,10 @@ export default {
 
 				self.timer = Math.floor(millis / 1000);
 			}, 50);
+
+			// Avoid seeing an old value for a short moment until the first
+			// invocation of our interval timer
+			self.timer = 0;
 		},
 		reset: function() {
 			this.state = 'waiting';
