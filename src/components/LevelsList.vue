@@ -3,6 +3,7 @@
 	<h2>Levels</h2>
 	<LevelsListElement
 		v-for="(level, index) in levels" v-bind:key="level.ident"
+		@click.native="levelClick(index)"
 		v-bind:index="index" v-bind:level="level"
 		v-bind:best-time="getBestTime(level)" v-bind:is-current="level.ident == currentLevelIdent" />
 </section>
@@ -30,6 +31,9 @@ export default {
 			} else {
 				return null;
 			}
+		},
+		levelClick: function(index) {
+			this.$emit('level-click', index);
 		}
 	}
 };

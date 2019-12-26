@@ -18,7 +18,7 @@
 			<span class="hint">Stuck? Read the <a href="https://doc.rust-lang.org/std/fmt/index.html"><code>std::fmt</code> documentation</a></span>
 		</div>
 		<div v-if="isStateFinished" class="controls">
-			<button @click="replay" class="replay">Replay</button>
+			<button @click="reset" class="replay">Replay</button>
 			<button class="next-level">Next level</button>
 		</div>
 	</template>
@@ -35,7 +35,7 @@ export default {
 	data: function() {
 		return {
 			// Will be populated inside selectRandomVariation (called on mount
-			// & replay)
+			// & reset/replay)
 			variationIndex: null,
 			state: 'waiting',
 			tickInterval: null,
@@ -108,10 +108,14 @@ export default {
 				self.timer = Math.floor(millis / 1000);
 			}, 50);
 		},
-		replay: function() {
+		reset: function() {
 			this.state = 'waiting';
 			this.answer = '';
 			this.selectRandomVariation();
+
+			// Timer could still be running if the reset is due to a change of
+			// level
+			this.clearTickInterval();
 		},
 		clearTickInterval: function() {
 			if (this.tickInterval) {
@@ -121,6 +125,12 @@ export default {
 		}
 	},
 	watch: {
+		levelIndex: function() {
+			this.reset();
+		},
+		level: function() {
+			this.reset();
+		},
 		answer: function() {
 			if (this.answer == this.result) {
 				this.state = 'finished';
