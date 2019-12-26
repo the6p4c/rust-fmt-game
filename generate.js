@@ -1,8 +1,114 @@
+const assert = require('assert');
 const child_process = require('child_process');
 const fs = require('fs');
 const process = require('process');
+const util = require('util');
 
 const mktemp = require('mktemp');
+
+function gvClassify(v) {
+	if (typeof v == 'string') {
+		return 'string';
+	}
+
+	if (v.hasOwnProperty('concat')) {
+		return 'concat';
+	}
+
+	if (v.hasOwnProperty('one of')) {
+		return 'one of';
+	}
+}
+
+function generateVariations(variations) {
+	const t = gvClassify(variations);
+
+	if (t == 'string') {
+		return [variations];
+	}
+
+	if (t == 'one of') {
+		// 'one of' kind of acts as a list of sub-problems, so solve them and
+		// flatten (since each sub-problem could contain a sub-sub-problem,
+		// etc.)
+		return variations['one of'].map(generateVariations).flat();
+	}
+
+	if (t == 'concat') {
+		const concat = variations['concat'];
+
+		var i;
+		let nonStringFound = false;
+		for (i = 0; i < concat.length; ++i) {
+			if (gvClassify(concat[i]) != 'string') {
+				nonStringFound = true;
+				break;
+			}
+		}
+
+		if (nonStringFound) {
+			const firstNonString = concat[i];
+			const variationsOfFirstNonString = generateVariations(firstNonString);
+
+			var results = [];
+			for (const variation of variationsOfFirstNonString) {
+				const concatClone = [...concat];
+				concatClone[i] = variation;
+
+				const subvariations = generateVariations({ 'concat': concatClone });
+				for (const subvariation of subvariations) {
+					results.push(subvariation);
+				}
+			}
+
+			return results;
+		} else {
+			return [concat.join('')];
+		}
+	}
+}
+
+assert.deepEqual(generateVariations("hello"), ["hello"]);
+assert.deepEqual(generateVariations({ "concat": ["a"] }), ["a"]);
+assert.deepEqual(generateVariations({ "concat": ["a", "b"] }), ["ab"]);
+assert.deepEqual(generateVariations({ "concat": ["a", "b", "c"] }), ["abc"]);
+assert.deepEqual(generateVariations({ "one of": ["a"] }), ["a"]);
+assert.deepEqual(generateVariations({ "one of": ["a", "b"] }), ["a", "b"]);
+assert.deepEqual(generateVariations({ "one of": ["a", "b", "c"] }), ["a", "b", "c"]);
+assert.deepEqual(generateVariations(
+	{
+		"one of": [
+			{ "one of": ["a"] },
+			{ "one of": ["b"] }
+		]
+	}
+), ["a", "b"]);
+assert.deepEqual(generateVariations(
+	{
+		"one of": [
+			{ "one of": ["a", "b"] },
+			{ "one of": ["c"] }
+		]
+	}
+), ["a", "b", "c"]);
+assert.deepEqual(generateVariations(
+	{
+		"concat": [
+			"x",
+			{ "one of": ["a", "b"] }
+		]
+	}
+), ["xa", "xb"]);
+assert.deepEqual(generateVariations(
+	{
+		"concat": [
+			"x",
+			{ "one of": ["a", "b"] },
+			"y",
+			{ "one of": ["c", "d"] }
+		]
+	}
+), ["xayc", "xayd", "xbyc", "xbyd"]);
 
 function getResults(variations) {
 	const variationsString = variations.join(',');
@@ -37,11 +143,12 @@ const generatedLevels = [];
 
 for (const level of levels) {
 	console.log('Reading level `' + level.ident + '` "' + level.name + '"');
-	const results = getResults(level.variations);
+	const variations = generateVariations(level.variations);
+	const results = getResults(variations);
 
 	let generatedVariations = [];
 	for (var i = 0; i < results.length; ++i) {
-		const variation = level.variations[i];
+		const variation = variations[i];
 		const result = results[i];
 
 		console.log('\t' + variation + ' = "' + result + '"');

@@ -9,9 +9,7 @@
 				"When your answer correctly matches the result, the textbox will go green and the timer will stop. Your best time will be recorded for each level.",
 				"(The <a href=\"https://doc.rust-lang.org/std/fmt/index.html\" target=\"blank\"><code>std::fmt</code></a> reference might come in handy!)"
 			],
-			"variations": [
-				"format!(\"{} {}\", \"hello\", \"world\")"
-			]
+			"variations": "format!(\"{} {}\", \"hello\", \"world\")"
 		},
 		{
 			"ident": "positional",
@@ -20,27 +18,29 @@
 				"Non-positional parameters are easy, but there's a world of fun to be discovered with positional parameters.",
 				"From here on out, each level has several variations that you might be presented. Replay as many times as you want, but pay close attention to the format string and arguments!"
 			],
-			"variations": [
-				"format!(\"{0}{1}{0}\", \"hello\", \"world\")",
-				"format!(\"{1}{0}{1}\", \"hello\", \"world\")",
-				"format!(\"{0}{1}{0}\", \"world\", \"hello\")",
-				"format!(\"{1}{0}{1}\", \"world\", \"hello\")"
-			]
+			"variations": {
+				"concat": [
+					"format!(\"",
+					{ "one of": ["{0}{1}{0}", "{1}{0}{1}"] },
+					"\", ",
+					{ "one of": ["\"hello\", \"world\"", "\"world\", \"hello\""] },
+					")"
+				]
+			}
 		},
 		{
 			"ident": "positional2",
 			"name": "Positional 2",
 			"description": ["Surely we can't use non-positional and positional parameters in the same format string... right?"],
-			"variations": [
-				"format!(\"{1} {} {0} {}\", 10, 20)",
-				"format!(\"{0} {} {1} {}\", 10, 20)",
-				"format!(\"{} {1} {} {0}\", 10, 20)",
-				"format!(\"{} {0} {} {1}\", 10, 20)",
-				"format!(\"{1} {} {0} {}\", 20, 10)",
-				"format!(\"{0} {} {1} {}\", 20, 10)",
-				"format!(\"{} {1} {} {0}\", 20, 10)",
-				"format!(\"{} {0} {} {1}\", 20, 10)"
-			]
+			"variations": {
+				"concat": [
+					"format!(\"",
+					{ "one of": ["{0} {} {1} {}", "{1} {} {0} {}", "{} {0} {} {1}", "{} {1} {} {0}"] },
+					"\", ",
+					{ "one of": ["10, 20", "20, 10"] },
+					")"
+				]
+			}
 		},
 		{
 			"ident": "padding",
@@ -49,14 +49,17 @@
 				"Strings need room to breathe, too!",
 				"Our first taste of formatting parameters."
 			],
-			"variations": [
-				"format!(\"{:6}!\", \"hello\")",
-				"format!(\"{:7}!\", \"hello\")",
-				"format!(\"{:8}!\", \"hello\")",
-				"format!(\"{:6}!\", \"world\")",
-				"format!(\"{:7}!\", \"world\")",
-				"format!(\"{:8}!\", \"world\")"
-			]
+			"variations": {
+				"concat": [
+					"format!(\"{:",
+					{ "one of": ["6", "7", "8"] },
+					"}",
+					{ "one of": ["!", "?", "."] },
+					"\", \"",
+					{ "one of": ["hello", "world"] },
+					"\")"
+				]
+			}
 		}
 	]
 }
