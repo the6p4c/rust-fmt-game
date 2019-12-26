@@ -137,23 +137,29 @@ function getResults(variations) {
 	});
 }
 
+const CHUNK_SIZE = 50;
+
 const LEVELS_FILE = 'levels.json';
 const levels = JSON.parse(fs.readFileSync(LEVELS_FILE, 'utf8')).levels;
 const generatedLevels = [];
 
 for (const level of levels) {
 	console.log('Reading level `' + level.ident + '` "' + level.name + '"');
-	const variations = generateVariations(level.variations);
-	const results = getResults(variations);
+	const allVariations = generateVariations(level.variations);
 
 	let generatedVariations = [];
-	for (var i = 0; i < results.length; ++i) {
-		const variation = variations[i];
-		const result = results[i];
+	for (var chunk = 0; chunk < Math.ceil(allVariations.length / CHUNK_SIZE); ++chunk) {
+		const variations = allVariations.slice(CHUNK_SIZE * chunk, CHUNK_SIZE * (chunk + 1));
+		const results = getResults(variations);
 
-		console.log('\t' + variation + ' = "' + result + '"');
+		for (var i = 0; i < results.length; ++i) {
+			const variation = variations[i];
+			const result = results[i];
 
-		generatedVariations.push([variation, result]);
+			console.log('\t' + variation + ' = "' + result + '"');
+
+			generatedVariations.push([variation, result]);
+		}
 	}
 
 	generatedLevels.push({
