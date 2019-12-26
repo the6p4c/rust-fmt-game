@@ -36,7 +36,7 @@ const problems = JSON.parse(fs.readFileSync(PROBLEMS_FILE, 'utf8')).problems;
 const generatedProblems = [];
 
 for (const problem of problems) {
-	console.log('Reading problem "' + problem.name + '"');
+	console.log('Reading problem `' + problem.ident + '` "' + problem.name + '"');
 	const results = getResults(problem.variations);
 
 	let generatedVariations = [];
@@ -50,6 +50,7 @@ for (const problem of problems) {
 	}
 
 	generatedProblems.push({
+		ident: problem.ident,
 		name: problem.name,
 		description: problem.description,
 		variations: generatedVariations

@@ -1,6 +1,7 @@
 {
 	"problems": [
 		{
+			"ident": "intro",
 			"name": "Intro",
 			"description": "Simple to start off. Brush up now, while you can!",
 			"variations": [
@@ -8,6 +9,7 @@
 			]
 		},
 		{
+			"ident": "positional",
 			"name": "Positional",
 			"description": "Non-positional parameters are easy, but there's a world of fun to be discovered with positional parameters.",
 			"variations": [
@@ -18,6 +20,7 @@
 			]
 		},
 		{
+			"ident": "positional2",
 			"name": "Positional 2",
 			"description": "Surely we can't use non-positional and positional parameters in the same format string... right?",
 			"variations": [
