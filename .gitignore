@@ -20,5 +20,5 @@ yarn-error.log*
 *.sln
 *.sw?
 
-# Generated problems
-public/problems.json
+# Generated levels
+public/levels.json

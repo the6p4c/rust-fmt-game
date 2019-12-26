@@ -15,7 +15,7 @@ function getResults(variations) {
 	}
 }`;
 
-	const executableFile = mktemp.createFileSync('problem-gen-XXXXX');
+	const executableFile = mktemp.createFileSync('level-gen-XXXXX');
 	const rsFile = executableFile + '.rs';
 
 	fs.writeFileSync(rsFile, RS_FILE_TEXT);
@@ -31,17 +31,17 @@ function getResults(variations) {
 	});
 }
 
-const PROBLEMS_FILE = 'problems.json';
-const problems = JSON.parse(fs.readFileSync(PROBLEMS_FILE, 'utf8')).problems;
-const generatedProblems = [];
+const LEVELS_FILE = 'levels.json';
+const levels = JSON.parse(fs.readFileSync(LEVELS_FILE, 'utf8')).levels;
+const generatedLevels = [];
 
-for (const problem of problems) {
-	console.log('Reading problem `' + problem.ident + '` "' + problem.name + '"');
-	const results = getResults(problem.variations);
+for (const level of levels) {
+	console.log('Reading level `' + level.ident + '` "' + level.name + '"');
+	const results = getResults(level.variations);
 
 	let generatedVariations = [];
 	for (var i = 0; i < results.length; ++i) {
-		const variation = problem.variations[i];
+		const variation = level.variations[i];
 		const result = results[i];
 
 		console.log('\t' + variation + ' = "' + result + '"');
@@ -49,13 +49,13 @@ for (const problem of problems) {
 		generatedVariations.push([variation, result]);
 	}
 
-	generatedProblems.push({
-		ident: problem.ident,
-		name: problem.name,
-		description: problem.description,
+	generatedLevels.push({
+		ident: level.ident,
+		name: level.name,
+		description: level.description,
 		variations: generatedVariations
 	});
 }
 
-const OUTPUT_FILE = 'public/problems.json';
-fs.writeFileSync(OUTPUT_FILE, JSON.stringify(generatedProblems));
+const OUTPUT_FILE = 'public/levels.json';
+fs.writeFileSync(OUTPUT_FILE, JSON.stringify(generatedLevels));
