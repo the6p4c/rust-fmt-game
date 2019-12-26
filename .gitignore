@@ -22,3 +22,5 @@ yarn-error.log*
 
 # Generated levels
 src/levels.js
+# Temp files - ignore just in case they aren't deleted as they should be
+level-gen-*
