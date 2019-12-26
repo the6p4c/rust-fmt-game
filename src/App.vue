@@ -1,7 +1,8 @@
 <template>
 	<div id="app">
 		<h1 id="header">Rust <code>format!</code> Game</h1>
-		<LevelsList id="levels-list" v-bind:levels="levels" v-bind:best-times="bestTimes" v-bind:current-level="currentLevel" />
+		<LevelsList id="levels-list" v-bind:levels="levels" v-bind:best-times="bestTimes" v-bind:current-level-ident="currentLevel.ident" />
+		<Game id="game" v-bind:level-index="currentLevelIndex" v-bind:level="currentLevel" />
 		<!-- &#xFE0F is the character VS16 (variation selector 16) - forces heart to be an emoji, not just a black blob -->
 		<footer id="footer">made with ❤&#xFE0F; by <a href="https://twitter.com/The6P4C">@The6P4C</a> / <a href="https://the6p4c.github.io/">the6p4c.github.io</a></footer>
 	</div>
@@ -9,21 +10,26 @@
 
 <script>
 import LevelsList from './components/LevelsList.vue';
+import Game from './components/Game.vue';
 
 export default {
 	name: 'app',
 	components: {
-		LevelsList
+		LevelsList,
+		Game
 	},
-	data: () => {
+	data: function() {
 		return {
 			bestTimes: {"positional": 60 * 15 + 16},
-			currentLevel: "intro"
+			currentLevelIndex: 0
 		};
 	},
 	computed: {
 		levels: function() {
 			return this.$root.$data.levels;
+		},
+		currentLevel: function() {
+			return this.levels[this.currentLevelIndex];
 		}
 	}
 };
@@ -111,6 +117,15 @@ body {
 
 #levels-list {
 	margin-top: 0;
+}
+
+#game {
+	display: flex;
+	padding: 10px;
+
+	grid-area: game;
+	justify-content: center;
+	flex-direction: column;
 }
 
 #footer {

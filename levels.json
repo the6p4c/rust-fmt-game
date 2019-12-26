@@ -3,7 +3,12 @@
 		{
 			"ident": "intro",
 			"name": "Intro",
-			"description": "Simple to start off. Brush up now, while you can!",
+			"description": [
+				"Simple to start off. Brush up now, while you can!",
+				"Once you click Start, type the result of the displayed <code>format!</code> call as fast as possible. No quotes required - just type the content of the resultant string.",
+				"When your answer correctly matches the result, the textbox will go green and the timer will stop. Your best time will be recorded for each level.",
+				"(The <a href=\"https://doc.rust-lang.org/std/fmt/index.html\"><code>std::fmt</code></a> reference might come in handy!)"
+			],
 			"variations": [
 				"format!(\"{} {}\", \"hello\", \"world\")"
 			]
@@ -11,7 +16,7 @@
 		{
 			"ident": "positional",
 			"name": "Positional",
-			"description": "Non-positional parameters are easy, but there's a world of fun to be discovered with positional parameters.",
+			"description": ["Non-positional parameters are easy, but there's a world of fun to be discovered with positional parameters."],
 			"variations": [
 				"format!(\"{0}{1}{0}\", \"hello\", \"world\")",
 				"format!(\"{1}{0}{1}\", \"hello\", \"world\")",
@@ -22,7 +27,7 @@
 		{
 			"ident": "positional2",
 			"name": "Positional 2",
-			"description": "Surely we can't use non-positional and positional parameters in the same format string... right?",
+			"description": ["Surely we can't use non-positional and positional parameters in the same format string... right?"],
 			"variations": [
 				"format!(\"{1} {} {0} {}\", 10, 20)",
 				"format!(\"{0} {} {1} {}\", 10, 20)",

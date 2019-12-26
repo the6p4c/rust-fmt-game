@@ -4,7 +4,7 @@
 	<LevelsListElement
 		v-for="(level, index) in levels" v-bind:key="level.ident"
 		v-bind:index="index" v-bind:level="level"
-		v-bind:best-time="getBestTime(level)" v-bind:is-current="level.ident == currentLevel" />
+		v-bind:best-time="getBestTime(level)" v-bind:is-current="level.ident == currentLevelIdent" />
 </section>
 </template>
 
@@ -19,7 +19,7 @@ export default {
 	props: {
 		levels: Array,
 		bestTimes: Object, // level ident -> Number? map, time in seconds
-		currentLevel: String
+		currentLevelIdent: String
 	},
 	methods: {
 		// Retrieve the player's best time for the level, or null if no best
