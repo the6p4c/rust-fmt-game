@@ -17,14 +17,14 @@ export default {
 	},
 	data: () => {
 		return {
-			levels: [
-				{ "ident": "intro", "name": "Intro" },
-				{ "ident": "positional", "name": "Positional" },
-				{ "ident": "positional2", "name": "Positional 2" }
-			],
 			bestTimes: {"positional": 60 * 15 + 16},
 			currentLevel: "intro"
 		};
+	},
+	computed: {
+		levels: function() {
+			return this.$root.$data.levels;
+		}
 	}
 };
 </script>

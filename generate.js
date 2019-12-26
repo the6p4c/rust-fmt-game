@@ -57,5 +57,5 @@ for (const level of levels) {
 	});
 }
 
-const OUTPUT_FILE = 'public/levels.json';
-fs.writeFileSync(OUTPUT_FILE, JSON.stringify(generatedLevels));
+const OUTPUT_FILE = 'src/levels.js';
+fs.writeFileSync(OUTPUT_FILE, 'export default ' + JSON.stringify(generatedLevels) + ';');

@@ -21,4 +21,4 @@ yarn-error.log*
 *.sw?
 
 # Generated levels
-public/levels.json
+src/levels.js
