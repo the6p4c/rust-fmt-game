@@ -6,7 +6,7 @@
 			@level-click="changeLevel"
 			v-bind:levels="levels" v-bind:best-times="bestTimes" v-bind:current-level-ident="currentLevel.ident" />
 		<Game
-			id="game"
+			id="game" ref="game"
 			@next-level="nextLevel"
 			v-bind:level-index="currentLevelIndex" v-bind:level="currentLevel" v-bind:has-next-level="!isLastLevel" />
 		<!-- &#xFE0F is the character VS16 (variation selector 16) - forces heart to be an emoji, not just a black blob -->
@@ -43,6 +43,15 @@ export default {
 	},
 	methods: {
 		changeLevel: function(index) {
+			// User has selected the same level again.
+			// Convenience and user expectation is that the level would reset,
+			// but this only happens if the index actually changes and the prop
+			// watches trigger.
+			// So, force the game to reset.
+			if (this.currentLevelIndex == index) {
+				this.$refs.game.reset();
+			}
+
 			this.currentLevelIndex = index;
 		},
 		nextLevel: function() {
