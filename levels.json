@@ -56,7 +56,28 @@
 					"}",
 					{ "one of": ["!", "?", "."] },
 					"\", \"",
-					{ "one of": ["hello", "world"] },
+					{ "one of": ["hello", "world", "string", "types", "refer"] },
+					"\")"
+				]
+			}
+		},
+		{
+			"ident": "padding2",
+			"name": "Padding 2",
+			"description": ["Padding wouldn't be all too useful if all we had was left-alignment with spaces. How about we mix it up a bit?"],
+			"variations": {
+				"concat": [
+					"format!(\"{:",
+					{ "one of": ["", " ", "0", "x"] },
+					">",
+					{ "one of": ["6", "7", "8"] },
+					"}{:",
+					{ "one of": [">", "<", ""] },
+					{ "one of": ["6", "7", "8"] },
+					"}\", \"",
+					{ "one of": ["hello", "world", "string", "types", "refer"] },
+					"\", \"",
+					{ "one of": ["hello", "world", "string", "types", "refer"] },
 					"\")"
 				]
 			}
