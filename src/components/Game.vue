@@ -19,7 +19,7 @@
 		</div>
 		<div v-if="isStateFinished" class="controls">
 			<button @click="reset" class="replay">Replay</button>
-			<button class="next-level">Next level</button>
+			<button v-if="hasNextLevel" @click="nextLevel" class="next-level">Next level</button>
 		</div>
 	</template>
 </main>
@@ -30,7 +30,8 @@ export default {
 	name: 'Game',
 	props: {
 		levelIndex: Number,
-		level: Object
+		level: Object,
+		hasNextLevel: Boolean
 	},
 	data: function() {
 		return {
@@ -116,6 +117,9 @@ export default {
 			// Timer could still be running if the reset is due to a change of
 			// level
 			this.clearTickInterval();
+		},
+		nextLevel: function() {
+			this.$emit('next-level');
 		},
 		clearTickInterval: function() {
 			if (this.tickInterval) {
