@@ -4,10 +4,10 @@
 		<LevelsList
 			id="levels-list"
 			@level-click="changeLevel"
-			v-bind:levels="levels" v-bind:best-times="bestTimes" v-bind:current-level-ident="currentLevel.ident" />
+			v-bind:levels="levels" v-bind:best-time-store="bestTimeStore" v-bind:current-level-ident="currentLevel.ident" />
 		<Game
 			id="game" ref="game"
-			@next-level="nextLevel"
+			@finish-level="finishLevel" @next-level="nextLevel"
 			v-bind:level-index="currentLevelIndex" v-bind:level="currentLevel" v-bind:has-next-level="!isLastLevel" />
 		<!-- &#xFE0F is the character VS16 (variation selector 16) - forces heart to be an emoji, not just a black blob -->
 		<footer id="footer">made with ❤&#xFE0F; by <a href="https://twitter.com/The6P4C">@The6P4C</a> / <a href="https://the6p4c.github.io/">the6p4c.github.io</a></footer>
@@ -26,13 +26,15 @@ export default {
 	},
 	data: function() {
 		return {
-			bestTimes: {"positional": 60 * 15 + 16},
 			currentLevelIndex: 0 // May be updated in mounted
 		};
 	},
 	computed: {
 		levels: function() {
 			return this.$root.$data.levels;
+		},
+		bestTimeStore: function() {
+			return this.$root.$data.bestTimeStore;
 		},
 		currentLevel: function() {
 			return this.levels[this.currentLevelIndex];
@@ -53,6 +55,9 @@ export default {
 			}
 
 			this.currentLevelIndex = index;
+		},
+		finishLevel: function(time) {
+			this.bestTimeStore.trySetBestTime(this.currentLevel.ident, time);
 		},
 		nextLevel: function() {
 			if (this.currentLevelIndex != this.levels.length - 1) {

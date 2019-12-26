@@ -142,6 +142,8 @@ export default {
 				this.endTime = Date.now();
 
 				this.clearTickInterval();
+
+				this.$emit('finish-level', this.timer);
 			}
 		}
 	},

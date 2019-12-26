@@ -5,7 +5,7 @@
 		v-for="(level, index) in levels" v-bind:key="level.ident"
 		@click.native="levelClick(index)"
 		v-bind:index="index" v-bind:level="level"
-		v-bind:best-time="getBestTime(level)" v-bind:is-current="level.ident == currentLevelIdent" />
+		v-bind:best-time="bestTimeStore.bestTimes[level.ident]" v-bind:is-current="level.ident == currentLevelIdent" />
 </section>
 </template>
 
@@ -19,7 +19,7 @@ export default {
 	},
 	props: {
 		levels: Array,
-		bestTimes: Object, // level ident -> Number? map, time in seconds
+		bestTimeStore: Object,
 		currentLevelIdent: String
 	},
 	methods: {
