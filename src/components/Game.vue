@@ -38,6 +38,9 @@ export default {
 			// & replay)
 			variationIndex: null,
 			state: 'waiting',
+			tickInterval: null,
+			startTime: 0,
+			endTime: 0,
 			timer: 0,
 			answer: ''
 		};
@@ -85,28 +88,53 @@ export default {
 		},
 		startLevel: function() {
 			this.state = 'playing';
+			this.startTime = Date.now();
 			// Wait until changes to DOM have been rendered, otherwise the
 			// answer element doesn't exist yet and therefore we can't set focus
 			// to it
 			this.$nextTick(function() {
 				this.$refs.answer.focus();
 			});
+
+			const self = this;
+			this.tickInterval = setInterval(function() {
+				let endTime = Date.now();
+				if (self.isStateFinished) {
+					endTime = self.endTime;
+				}
+
+				const millis = endTime - self.startTime;
+
+				self.timer = Math.floor(millis / 1000);
+			}, 50);
 		},
 		replay: function() {
 			this.state = 'waiting';
 			this.answer = '';
 			this.selectRandomVariation();
+		},
+		clearTickInterval: function() {
+			if (this.tickInterval) {
+				clearInterval(this.tickInterval);
+				this.tickInterval = null;
+			}
 		}
 	},
 	watch: {
 		answer: function() {
 			if (this.answer == this.result) {
 				this.state = 'finished';
+				this.endTime = Date.now();
+
+				this.clearTickInterval();
 			}
 		}
 	},
 	mounted: function() {
 		this.selectRandomVariation();
+	},
+	destroyed: function() {
+		this.clearTickInterval();
 	}
 };
 </script>
