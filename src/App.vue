@@ -27,7 +27,7 @@ export default {
 	data: function() {
 		return {
 			bestTimes: {"positional": 60 * 15 + 16},
-			currentLevelIndex: 0
+			currentLevelIndex: 0 // May be updated in mounted
 		};
 	},
 	computed: {
@@ -57,6 +57,20 @@ export default {
 		nextLevel: function() {
 			if (this.currentLevelIndex != this.levels.length - 1) {
 				++this.currentLevelIndex;
+			}
+		}
+	},
+	mounted: function() {
+		const initialLevelIdent = this.$root.$data.initialLevelIdent;
+		if (initialLevelIdent == null) {
+			// Safe - current level index already initialized to 0
+			return;
+		}
+
+		// Find the level with the matching ident
+		for (var i = 0; i < this.levels.length; ++i) {
+			if (this.levels[i].ident == initialLevelIdent) {
+				this.currentLevelIndex = i;
 			}
 		}
 	}

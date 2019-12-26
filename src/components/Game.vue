@@ -4,6 +4,7 @@
 		<h2>{{ levelIndex + 1 }}. {{ level.name }}</h2>
 		<p v-for="line in level.description" v-bind:key="line" v-html="line"></p>
 		<button @click="startLevel">Start</button>
+		<a v-bind:href="'#' + level.ident" class="permalink">Permalink to this level</a>
 	</template>
 	<template v-else>
 		<code v-if="isStatePlaying" class="problem">{{ variation }}</code>
@@ -163,6 +164,12 @@ export default {
 
 .game h2 + p {
 	margin-top: 0;
+}
+
+.permalink {
+	margin-top: 10px;
+
+	text-align: right;
 }
 
 .problem, .equals {
