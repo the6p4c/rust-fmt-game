@@ -11,8 +11,8 @@
 		<code v-else class="problem"><a v-bind:href="playgroundLink" target="blank">{{ variation.formatCall }}</a></code>
 		<code class="equals">==</code>
 		<input
-			v-model="answer" ref="answer"
-			class="answer" type="text" spellcheck="false"
+			v-model="guess" ref="guess"
+			class="guess" type="text" spellcheck="false"
 			v-bind:class="{ 'correct': isStateFinished }" v-bind:readonly="isStateFinished">
 		<div class="timer-and-hint">
 			<span class="timer">{{ timerString }}</span>
@@ -36,16 +36,18 @@ export default {
 	},
 	data: function() {
 		return {
+			state: 'waiting',
+
 			// Will be populated inside selectRandomVariation (called on mount
-			// & reset/replay)
+			// and reset/replay)
 			variation: null,
 
-			state: 'waiting',
+			guess: '',
+
 			tickInterval: null,
 			startTime: 0,
 			endTime: 0,
-			timer: 0,
-			answer: ''
+			timer: 0
 		};
 	},
 	computed: {
@@ -88,13 +90,16 @@ export default {
 			this.selectRandomVariation();
 
 			this.state = 'playing';
-			this.startTime = Date.now();
+
+			this.guess = '';
 			// Wait until changes to DOM have been rendered, otherwise the
-			// answer element doesn't exist yet and therefore we can't set focus
+			// guess element doesn't exist yet and therefore we can't set focus
 			// to it
 			this.$nextTick(function() {
-				this.$refs.answer.focus();
+				this.$refs.guess.focus();
 			});
+
+			this.startTime = Date.now();
 
 			const self = this;
 			this.tickInterval = setInterval(function() {
@@ -114,8 +119,6 @@ export default {
 		},
 		reset: function() {
 			this.state = 'waiting';
-			this.answer = '';
-			this.selectRandomVariation();
 
 			// Timer could still be running if the reset is due to a change of
 			// level
@@ -138,8 +141,8 @@ export default {
 		level: function() {
 			this.reset();
 		},
-		answer: function() {
-			if (this.answer == this.variation.result) {
+		guess: function() {
+			if (this.guess == this.variation.result) {
 				this.state = 'finished';
 				this.endTime = Date.now();
 
@@ -179,7 +182,7 @@ export default {
 	text-align: center;
 }
 
-.problem, .equals, .answer {
+.problem, .equals, .guess {
 	font-size: 200%;
 }
 
@@ -192,14 +195,14 @@ export default {
 	margin-bottom: 10px;
 }
 
-.answer {
+.guess {
 	padding-left: 10px;
 	padding-right: 10px;
 
 	line-height: 200%;
 }
 
-.answer.correct {
+.guess.correct {
 	background-color: #0F6;
 }
 
