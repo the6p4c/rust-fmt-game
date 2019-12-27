@@ -19,7 +19,7 @@
 			<span class="hint">Stuck? Read the <a href="https://doc.rust-lang.org/std/fmt/index.html" target="blank"><code>std::fmt</code> documentation</a></span>
 		</div>
 		<div v-if="isStateFinished" class="controls">
-			<button @click="reset" class="replay">Replay</button>
+			<button @click="reset" class="replay">Generate new &amp; replay</button>
 			<button v-if="hasNextLevel" @click="nextLevel" class="next-level">Next level</button>
 		</div>
 	</template>
