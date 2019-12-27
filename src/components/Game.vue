@@ -183,7 +183,13 @@ export default {
 }
 
 .problem, .equals, .guess {
-	font-size: 200%;
+	font-size: 130%;
+}
+
+@media (min-width: 800px) {
+	.problem, .equals, .guess {
+		font-size: 200%;
+	}
 }
 
 .problem {
