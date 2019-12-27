@@ -28,12 +28,24 @@ const vm = new Vue({
 	}
 }).$mount('#app');
 
+function paramToString(param) {
+	if (typeof param == 'string') {
+		return '"' + param + '"';
+	}
+
+	if (typeof param == 'number') {
+		return '' + param;
+	}
+
+	return '???';
+}
+
 import('rust-fmt-game-wasm').then((mod) => {
 	vm.$data.formatter = function(spec, params) {
 		try {
 			const result = mod.format(spec, params);
 
-			const paramsString = params.map((s) => '"' + s + '"').join(', ');
+			const paramsString = params.map((param) => paramToString(param)).join(', ');
 			const formatCall = 'format!("' + spec + '", ' + paramsString + ')';
 
 			return {
