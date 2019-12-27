@@ -16,7 +16,7 @@ extern "C" {
 
 enum ParamFromJs {
     Str(String),
-    Integer(u32),
+    Integer(i32),
 }
 
 impl ParamFromJs {
@@ -46,7 +46,7 @@ pub fn format(spec: &str, params: Box<[JsValue]>) -> Result<String, JsValue> {
 
             if let Some(f) = jsv.as_f64() {
                 if f == f.floor() {
-                    return Ok(ParamFromJs::Integer(f as u32));
+                   return Ok(ParamFromJs::Integer(f as i32));
                 } else {
                     return Err(String::from("numeric param was not integer"));
                 }
