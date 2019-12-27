@@ -19,7 +19,7 @@
 			<span class="hint">Stuck? Read the <a href="https://doc.rust-lang.org/std/fmt/index.html" target="blank"><code>std::fmt</code> documentation</a></span>
 		</div>
 		<div v-if="isStateFinished" class="controls">
-			<button @click="reset" class="replay">Generate new &amp; replay</button>
+			<button @click="replay" class="replay">Generate new &amp; replay</button>
 			<button v-if="hasNextLevel" @click="nextLevel" class="next-level">Next level</button>
 		</div>
 	</template>
@@ -117,15 +117,18 @@ export default {
 			// invocation of our interval timer
 			self.timer = 0;
 		},
+		replay: function() {
+			this.startLevel();
+		},
+		nextLevel: function() {
+			this.$emit('next-level');
+		},
 		reset: function() {
 			this.state = 'waiting';
 
 			// Timer could still be running if the reset is due to a change of
 			// level
 			this.clearTickInterval();
-		},
-		nextLevel: function() {
-			this.$emit('next-level');
 		},
 		clearTickInterval: function() {
 			if (this.tickInterval) {
