@@ -17,8 +17,8 @@ export default [
 			"(The <a href='https://doc.rust-lang.org/std/fmt/index.html' target='blank'><code>std::fmt</code></a> reference might come in handy!)"
 		],
 		generator: () => {
-			const spec = '{} {}';
-			const params = ['hello', 'world'];
+			const spec = '{}, world!';
+			const params = ['hello'];
 
 			return {
 				spec: spec,
@@ -34,7 +34,7 @@ export default [
 			"From here on out, each level has several variations that you might be presented. Replay as many times as you want, but pay close attention to the format string and arguments!"
 		],
 		generator: () => {
-			const spec = oneOf('{0}{1}{0}', '{1}{0}{1}');
+			const spec = oneOf('{0} {1} {0}', '{1} {0} {1}');
 			const params = oneOf(['hello', 'world'], ['world', 'hello']);
 
 			return {
