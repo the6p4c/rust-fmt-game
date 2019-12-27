@@ -42,7 +42,9 @@ import('rust-fmt-game-wasm').then((mod) => {
 				result: result
 			};
 		} catch (e) {
-			alert('Something went horribly wrong during formatting (calling into WASM). Here\'s some info: ' + e);
+			alert('Something went horribly wrong during formatting (calling into WASM). Here\'s some info: ' + e + '\nCheck the console for more information. Sorry!');
+			// eslint-disable-next-line no-console
+			console.error('Error during formatting - spec: "' + spec + '" params:', params, 'error:', e, '');
 		}
 	};
 });
