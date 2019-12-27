@@ -1,5 +1,5 @@
 <template>
-	<div id="app">
+	<div v-if="loaded" id="app">
 		<h1 id="header">Rust <code>format!</code> Game</h1>
 		<LevelsList
 			id="levels-list"
@@ -11,6 +11,9 @@
 			v-bind:level-index="currentLevelIndex" v-bind:level="currentLevel" v-bind:has-next-level="!isLastLevel" />
 		<!-- &#xFE0F is the character VS16 (variation selector 16) - forces heart to be an emoji, not just a black blob -->
 		<footer id="footer">made with ❤&#xFE0F; by <a href="https://twitter.com/The6P4C">@The6P4C</a> / <a href="https://the6p4c.github.io/">the6p4c.github.io</a></footer>
+	</div>
+	<div v-else>
+		Loading...
 	</div>
 </template>
 
@@ -30,6 +33,9 @@ export default {
 		};
 	},
 	computed: {
+		loaded: function() {
+			return this.$root.$data.formatter != null;
+		},
 		levels: function() {
 			return this.$root.$data.levels;
 		},

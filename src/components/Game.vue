@@ -7,8 +7,8 @@
 		<a v-bind:href="'#' + level.ident" class="permalink">Permalink to this level</a>
 	</template>
 	<template v-else>
-		<code v-if="isStatePlaying" class="problem">{{ variation }}</code>
-		<code v-else class="problem"><a v-bind:href="playgroundLink" target="blank">{{ variation }}</a></code>
+		<code v-if="isStatePlaying" class="problem">{{ variation.formatCall }}</code>
+		<code v-else class="problem"><a v-bind:href="playgroundLink" target="blank">{{ variation.formatCall }}</a></code>
 		<code class="equals">==</code>
 		<input
 			v-model="answer" ref="answer"
@@ -38,7 +38,8 @@ export default {
 		return {
 			// Will be populated inside selectRandomVariation (called on mount
 			// & reset/replay)
-			variationIndex: null,
+			variation: null,
+
 			state: 'waiting',
 			tickInterval: null,
 			startTime: 0,
@@ -57,22 +58,16 @@ export default {
 		isStateFinished: function() {
 			return this.state == 'finished';
 		},
-		variation: function() {
-			return this.level.variations[this.variationIndex][0];
-		},
 		playgroundLink: function() {
 			const rsFileText = 
 				'fn main() {\n' +
-				'\tlet s = ' + this.variation + ';\n' +
+				'\tlet s = ' + this.variation.formatCall + ';\n' +
 				'\n' +
 				'\tprintln!("{:?}", s);\n' +
 				'}';
 			const rsFileTextEscaped = encodeURIComponent(rsFileText);
 
 			return 'https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=' + rsFileTextEscaped;
-		},
-		result: function() {
-			return this.level.variations[this.variationIndex][1];
 		},
 		timerString: function() {
 			const minutes = Math.floor(this.timer / 60);
@@ -86,9 +81,12 @@ export default {
 	},
 	methods: {
 		selectRandomVariation: function() {
-			this.variationIndex = Math.floor(Math.random() * this.level.variations.length);
+			const variationData = this.level.generator();
+			this.variation = this.$root.$data.formatter(variationData.spec, variationData.params);
 		},
 		startLevel: function() {
+			this.selectRandomVariation();
+
 			this.state = 'playing';
 			this.startTime = Date.now();
 			// Wait until changes to DOM have been rendered, otherwise the
@@ -141,7 +139,7 @@ export default {
 			this.reset();
 		},
 		answer: function() {
-			if (this.answer == this.result) {
+			if (this.answer == this.variation.result) {
 				this.state = 'finished';
 				this.endTime = Date.now();
 
@@ -150,9 +148,6 @@ export default {
 				this.$emit('finish-level', this.timer);
 			}
 		}
-	},
-	mounted: function() {
-		this.selectRandomVariation();
 	},
 	destroyed: function() {
 		this.clearTickInterval();

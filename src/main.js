@@ -53,11 +53,34 @@ bestTimeStore.trySetBestTime = (ident, time) => {
 	}
 };
 
-new Vue({
+const vm = new Vue({
 	render: h => h(App),
 	data: {
 		levels: levels,
 		bestTimeStore: bestTimeStore,
-		initialLevelIdent: initialLevelIdent
+		initialLevelIdent: initialLevelIdent,
+
+		formatter: null // Populated after WASM module loads
 	}
 }).$mount('#app');
+
+import('rust-fmt-game-wasm').then((mod) => {
+	vm.$data.formatter = function(spec, params) {
+		try {
+			const result = mod.format(spec, params);
+
+			const paramsString = params.map((s) => '"' + s + '"').join(', ');
+			const formatCall = 'format!("' + spec + '", ' + paramsString + ')';
+
+			return {
+				originalSpec: spec,
+				originalParams: params,
+
+				formatCall: formatCall,
+				result: result
+			};
+		} catch (e) {
+			alert('Something went horribly wrong during formatting (calling into WASM). Here\'s some info: ' + e);
+		}
+	};
+});

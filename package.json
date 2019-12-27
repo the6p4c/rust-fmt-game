@@ -10,6 +10,7 @@
   "dependencies": {
     "core-js": "^3.4.3",
     "normalize.css": "^8.0.1",
+    "rust-fmt-game-wasm": "file:rust-fmt-game-wasm/pkg",
     "vue": "^2.6.10"
   },
   "devDependencies": {
