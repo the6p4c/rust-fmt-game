@@ -12,8 +12,11 @@
 		<!-- &#xFE0F is the character VS16 (variation selector 16) - forces heart to be an emoji, not just a black blob -->
 		<footer id="footer">made with ❤&#xFE0F; by <a href="https://twitter.com/The6P4C">@The6P4C</a> / <a href="https://the6p4c.github.io/">the6p4c.github.io</a></footer>
 	</div>
-	<div v-else>
-		Loading...
+	<div v-else id="app-loading">
+		<span id="app-loading-message">
+			<template v-if="loadingFailed">We're sorry, but something's gone wrong loading the WASM module we use for evaluating Rust format strings 😢 Maybe your browser doesn't support WASM? (Error: {{ loadingError }})</template>
+			<template v-else>Loading...</template>
+		</span>
 	</div>
 </template>
 
@@ -35,6 +38,12 @@ export default {
 	computed: {
 		loaded: function() {
 			return this.$root.$data.formatter != null;
+		},
+		loadingError: function() {
+			return this.$root.$data.formatterLoadError;
+		},
+		loadingFailed: function() {
+			return this.loadingError != null;
 		},
 		levels: function() {
 			return this.$root.$data.levels;
@@ -187,5 +196,20 @@ body {
 	grid-area: footer;
 
 	text-align: center;
+}
+
+#app-loading {
+	display: flex;
+	width: 100%;
+	height: 100%;
+
+	align-items: center;
+	justify-content: center;
+}
+
+#app-loading-message {
+	margin: 50px;
+
+	line-height: 200%;
 }
 </style>

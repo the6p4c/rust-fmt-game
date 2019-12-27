@@ -22,7 +22,9 @@ const vm = new Vue({
 		bestTimeStore: bestTimeStore,
 		initialLevelIdent: initialLevelIdent,
 
-		formatter: null // Populated after WASM module loads
+		// Populated after WASM module loads
+		formatter: null,
+		formatterLoadError: null
 	}
 }).$mount('#app');
 
@@ -47,4 +49,8 @@ import('rust-fmt-game-wasm').then((mod) => {
 			console.error('Error during formatting - spec: "' + spec + '" params:', params, 'error:', e, '');
 		}
 	};
+}).catch((e) => {
+	// eslint-disable-next-line no-console
+	console.error('Formatter load error', e.stack);
+	vm.$data.formatterLoadError = e;
 });
