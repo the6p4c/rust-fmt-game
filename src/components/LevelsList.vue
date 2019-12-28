@@ -1,12 +1,11 @@
 <template>
-<section>
-	<h2>Levels</h2>
+<div>
 	<LevelsListElement
 		v-for="(level, index) in levels" v-bind:key="level.ident"
 		@click.native="levelClick(index)"
 		v-bind:index="index" v-bind:level="level"
 		v-bind:best-time="bestTimeStore.bestTimes[level.ident]" v-bind:is-current="level.ident == currentLevelIdent" />
-</section>
+</div>
 </template>
 
 <script>

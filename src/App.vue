@@ -1,10 +1,20 @@
 <template>
 	<div v-if="loaded" id="app">
+		<div
+			id="hamburger"
+			@click="toggleLevelsListVisibility" v-bind:class="{ visible: !levelsListVisible }">
+			<span id="hamburger-icon">&#x2630;</span>
+		</div>
 		<h1 id="header">Rust <code>format!</code> Game</h1>
-		<LevelsList
-			id="levels-list"
-			@level-click="changeLevel"
-			v-bind:levels="levels" v-bind:best-time-store="bestTimeStore" v-bind:current-level-ident="currentLevel.ident" />
+		<section id="levels-list" v-bind:class="{ visible: levelsListVisible }">
+			<h2>Levels</h2>
+			<span
+				id="close"
+				@click="toggleLevelsListVisibility" v-bind:class="{ visible: levelsListVisible }">X</span>
+			<LevelsList
+				@level-click="changeLevel"
+				v-bind:levels="levels" v-bind:best-time-store="bestTimeStore" v-bind:current-level-ident="currentLevel.ident" />
+		</section>
 		<Game
 			id="game" ref="game"
 			@finish-level="finishLevel" @next-level="nextLevel"
@@ -32,7 +42,9 @@ export default {
 	},
 	data: function() {
 		return {
-			currentLevelIndex: 0 // May be updated in mounted
+			currentLevelIndex: 0, // May be updated in mounted
+
+			levelsListVisible: false // Only used in small layouts
 		};
 	},
 	computed: {
@@ -59,7 +71,15 @@ export default {
 		}
 	},
 	methods: {
+		toggleLevelsListVisibility: function() {
+			this.levelsListVisible = !this.levelsListVisible;
+		},
 		changeLevel: function(index) {
+			// Hide the menu if the user selects a new level
+			if (this.levelsListVisible) {
+				this.toggleLevelsListVisibility();
+			}
+
 			// User has selected the same level again.
 			// Convenience and user expectation is that the level would reset,
 			// but this only happens if the index actually changes and the prop
@@ -127,12 +147,12 @@ body {
 	height: 100%;
 	margin: 0 auto;
 
-	grid-template-columns: 100%;
+	grid-template-columns: auto 1fr;
 	grid-template-rows: auto 1fr auto;
 	grid-template-areas:
-		"header"
-		"game"
-		"footer";
+		"hamburger header"
+		"game game"
+		"footer footer";
 }
 
 @media (min-width: 800px) {
@@ -163,16 +183,81 @@ body {
 	text-align: center;
 }
 
+#hamburger {
+	display: none;
+
+	align-items: center;
+
+	font-size: 26px;
+}
+
+#hamburger.visible {
+	display: flex;
+}
+
+@media (min-width: 800px) {
+	#hamburger.visible {
+		display: none;
+	}
+}
+
+#hamburger-icon {
+	margin-left: 15px;
+
+	font-size: 25px;
+}
+
+#close {
+	display: none;
+
+	position: absolute;
+	top: 20px;
+	right: 20px;
+
+	font-size: 26px;
+
+	/* Close button is before the levels list in the DOM, so push it to the top so it's visible */
+	z-index: 999;
+}
+
+#close.visible {
+	display: block;
+}
+
+@media (min-width: 800px) {
+	#close.visible {
+		display: none;
+	}
+}
+
 #levels-list {
 	display: none;
+	width: 100%;
+	height: 100%;
+
+	position: absolute;
+	top: 0px;
+	left: 0px;
+
 	padding: 10px;
+	box-sizing: border-box;
+
+	background-color: white;
 
 	overflow-y: auto;
+}
+
+#levels-list.visible {
+	display: block;
 }
 
 @media (min-width: 800px) {
 	#levels-list {
 		display: initial;
+		width: auto;
+		height: auto;
+
+		position: static;
 
 		grid-area: levels-nav;
 	}
