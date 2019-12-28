@@ -9,7 +9,7 @@
 	<template v-else>
 		<code v-if="isStatePlaying" class="problem">{{ variation.formatCall }}</code>
 		<code v-else class="problem"><a v-bind:href="playgroundLink" target="_blank" rel="noreferrer noopener" title="Run in Rust Playground">{{ variation.formatCall }}</a></code>
-		<code class="equals">==<a v-bind:href="playgroundLink" class="cheat-link" target="_blank" rel="noreferrer noopener" title="Run in Rust Playground (cheater)"><FontAwesomeIcon icon="external-link-alt" /></a></code>
+		<code class="equals">==<a v-if="isStatePlaying" v-bind:href="playgroundLink" class="cheat-link" target="_blank" rel="noreferrer noopener" title="Run in Rust Playground (cheater)"><FontAwesomeIcon icon="external-link-alt" /></a></code>
 		<input
 			v-model="guess" ref="guess"
 			class="guess" type="text" spellcheck="false"
