@@ -262,6 +262,10 @@ export default {
 	text-align: right;
 }
 
+.guess.correct + .timer-and-hint .hint {
+	display: none;
+}
+
 .controls {
 	display: flex;
 	justify-content: flex-end;
