@@ -12,5 +12,14 @@ module.exports = {
 				outDir: path.join(__dirname, 'rust-fmt-game-wasm', 'pkg')
 			})
 		]
+	},
+	chainWebpack: (config) => {
+		config.plugin('html').tap((args) => {
+			// GitHub pages doesn't like to serve a minified HTML file saved
+			// as index.html when navigating to the bare directory.
+			args[0].minify = false;
+
+			return args;
+		});
 	}
 };

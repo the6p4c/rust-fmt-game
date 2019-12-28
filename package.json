@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+	"deploy": "rm -rf dist/ && npm run build && ghp-import --no-jekyll -b master -m \"Deploy on `date -u`\" -p -f dist/"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
