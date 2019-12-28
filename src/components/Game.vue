@@ -4,11 +4,11 @@
 		<h2>{{ levelIndex + 1 }}. {{ level.name }}</h2>
 		<p v-for="line in level.description" v-bind:key="line" v-html="line"></p>
 		<button @click="startLevel" class="start">Start</button>
-		<a v-bind:href="'#' + level.ident" target="blank" class="permalink">Permalink to this level</a>
+		<a v-bind:href="'#' + level.ident" target="_blank" rel="noreferrer noopener" class="permalink">Permalink to this level</a>
 	</template>
 	<template v-else>
 		<code v-if="isStatePlaying" class="problem">{{ variation.formatCall }}</code>
-		<code v-else class="problem"><a v-bind:href="playgroundLink" target="blank" title="Run in Rust Playground">{{ variation.formatCall }}</a></code>
+		<code v-else class="problem"><a v-bind:href="playgroundLink" target="_blank" rel="noreferrer noopener" title="Run in Rust Playground">{{ variation.formatCall }}</a></code>
 		<code class="equals">==</code>
 		<input
 			v-model="guess" ref="guess"
@@ -16,7 +16,7 @@
 			v-bind:class="{ 'correct': isStateFinished }" v-bind:readonly="isStateFinished">
 		<div class="timer-and-hint">
 			<span class="timer">{{ timerString }}</span>
-			<span class="hint">Stuck? Read the <a href="https://doc.rust-lang.org/std/fmt/index.html" target="blank"><code>std::fmt</code> documentation</a> &#x00B7; <a @click.prevent="reset" href="#">reset/new problem</a></span>
+			<span class="hint">Stuck? Read the <a href="https://doc.rust-lang.org/std/fmt/index.html" target="_blank" rel="noreferrer noopener"><code>std::fmt</code> documentation</a> &#x00B7; <a @click.prevent="reset" href="#">reset/new problem</a></span>
 		</div>
 		<div v-if="isStateFinished" class="controls">
 			<button @click="replay" class="replay">Generate new &amp; replay</button>

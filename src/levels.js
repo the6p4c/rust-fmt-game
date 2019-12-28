@@ -61,7 +61,7 @@ export default [
 			"Simple to start off. Brush up now, while you can!",
 			"Once you click Start, type the result of the displayed <code>format!</code> call as fast as possible. No quotes required - just type the content of the resultant string.",
 			"When your answer correctly matches the result, the textbox will go green and the timer will stop. Your best time will be recorded for each level.",
-			"(The <a href='https://doc.rust-lang.org/std/fmt/index.html' target='blank'><code>std::fmt</code></a> reference might come in handy!)"
+			"(The <a href='https://doc.rust-lang.org/std/fmt/index.html' target='_blank' rel='noreferrer noopener'><code>std::fmt</code></a> reference might come in handy!)"
 		],
 		generator: () => {
 			const spec = '{}, world!';
