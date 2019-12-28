@@ -3,12 +3,12 @@
 	<template v-if="isStateWaiting">
 		<h2>{{ levelIndex + 1 }}. {{ level.name }}</h2>
 		<p v-for="line in level.description" v-bind:key="line" v-html="line"></p>
-		<button @click="startLevel">Start</button>
+		<button @click="startLevel" class="start">Start</button>
 		<a v-bind:href="'#' + level.ident" target="blank" class="permalink">Permalink to this level</a>
 	</template>
 	<template v-else>
 		<code v-if="isStatePlaying" class="problem">{{ variation.formatCall }}</code>
-		<code v-else class="problem"><a v-bind:href="playgroundLink" target="blank">{{ variation.formatCall }}</a></code>
+		<code v-else class="problem"><a v-bind:href="playgroundLink" target="blank" title="Run in Rust Playground">{{ variation.formatCall }}</a></code>
 		<code class="equals">==</code>
 		<input
 			v-model="guess" ref="guess"
@@ -171,6 +171,10 @@ export default {
 
 .game h2 + p {
 	margin-top: 0;
+}
+
+.start {
+	line-height: 150%;
 }
 
 .permalink {

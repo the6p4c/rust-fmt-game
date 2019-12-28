@@ -1,7 +1,7 @@
 <template>
 <div class="level" v-bind:class="{ 'level-current': isCurrent }">
 	<span class="level-name">{{ index + 1 }}. {{ level.name }}</span>
-	<span v-if="bestTime" class="best-time" v-bind:title="'Best time: ' + bestTimeString">{{ bestTimeString }}</span>
+	<span v-if="bestTime" class="best-time" v-bind:title="'Best time: ' + bestTimeHoverString">{{ bestTimeString }}</span>
 	<span v-else class="best-time" title="No best time yet">&mdash;</span>
 </div>
 </template>
@@ -16,12 +16,24 @@ export default {
 		isCurrent: Boolean
 	},
 	computed: {
-		bestTimeString: function() {
-			const minutes = Math.floor(this.bestTime / 60);
-			const seconds = this.bestTime % 60;
+		bestTimeMinutes: function() {
+			return Math.floor(this.bestTime / 60);
+		},
+		bestTimeSeconds: function() {
+			return this.bestTime % 60;
+		},
+		bestTimeHoverString: function() {
+			const minutesString = '' + this.bestTimeMinutes;
+			const secondsString = '' + this.bestTimeSeconds;
 
-			const minutesString = ('' + minutes).padStart(2, '0');
-			const secondsString = ('' + seconds).padStart(2, '0');
+			const minutePlural = this.bestTimeMinutes == 1 ? '' : 's';
+			const secondPlural = this.bestTimeSeconds == 1 ? '' : 's';
+
+			return minutesString + ' minute' + minutePlural + ', ' + secondsString + ' second' + secondPlural;
+		},
+		bestTimeString: function() {
+			const minutesString = ('' + this.bestTimeMinutes).padStart(2, '0');
+			const secondsString = ('' + this.bestTimeSeconds).padStart(2, '0');
 
 			return minutesString + ':' + secondsString;
 		}
