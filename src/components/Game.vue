@@ -9,7 +9,7 @@
 	<template v-else>
 		<code v-if="isStatePlaying" class="problem">{{ variation.formatCall }}</code>
 		<code v-else class="problem"><a v-bind:href="playgroundLink" target="_blank" rel="noreferrer noopener" title="Run in Rust Playground">{{ variation.formatCall }}</a></code>
-		<code class="equals">==</code>
+		<code class="equals">==<a v-bind:href="playgroundLink" class="cheat-link" target="_blank" rel="noreferrer noopener" title="Run in Rust Playground (cheater)"><FontAwesomeIcon icon="external-link-alt" /></a></code>
 		<input
 			v-model="guess" ref="guess"
 			class="guess" type="text" spellcheck="false"
@@ -181,6 +181,22 @@ export default {
 	margin-top: 10px;
 
 	text-align: right;
+}
+
+.cheat-link {
+	display: inline-block;
+	/* Element and icon is displayed, but it doesn't force the == off center */
+	width: 0px;
+	margin-left: 5px;
+
+	vertical-align: super;
+	font-size: 40%;
+}
+
+@media (min-width: 800px) {
+	.cheat-link {
+		font-size: 25%;
+	}
 }
 
 .problem, .equals {
