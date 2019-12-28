@@ -78,7 +78,7 @@ export default [
 		name: 'Positional',
 		description: [
 			"Non-positional parameters are easy, but there's a world of fun to be discovered with positional parameters.",
-			"<strong>From here on out, each level has several variations that you might be presented at random</strong>. Replay as many times as you want, but pay close attention to the format string and arguments!"
+			"<strong>From here on out, each level is randomised!</strong> Replay each as many times as you want, but pay close attention to the format string and arguments - they'll change!"
 		],
 		generator: () => {
 			const spec = randomChoice([
@@ -139,7 +139,7 @@ export default [
 	{
 		ident: 'alignment2',
 		name: 'Alignment 2',
-		description: ["Alignment wouldn't be all too useful if all we had was right-side padding with spaces. How about we mix it up a bit?"],
+		description: ["Alignment wouldn't be all too useful if all we had was left alignment using spaces. How about we mix it up a bit?"],
 		generator: () => {
 			const FILLS = ['', ' ', '0', 'x'];
 			const ALIGNS = ['>', '<', ''];
@@ -201,7 +201,7 @@ export default [
 	{
 		ident: 'precision-alignment',
 		name: 'Precision & Alignment',
-		description: [""],
+		description: ["String arguments again, combining our last two formatting parameter types."],
 		generator: () => {
 			const FILLS = ['0', '1', 'x', '_', ' '];
 			const ALIGNS = ['<', '>'];
@@ -256,11 +256,11 @@ export default [
 		}
 	},
 	{
-		ident: 'numeric2',
-		name: 'Numeric 2',
+		ident: 'numeric-bases',
+		name: 'Numeric: Bases',
 		description: [
 			"Binary. It's how computers <em>think</em>.",
-			"We've been kind - you shouldn't need a calculator for these conversions."
+			"I've been kind - you shouldn't need a calculator for these conversions."
 		],
 		generator: () => {
 			const base = randomChoice(['b', 'o', randomChoice(['x', 'X'])]);
@@ -269,13 +269,13 @@ export default [
 			// conversion from decimal can be done in your head)
 			let alignment, value;
 			if (base == 'b') {
-				alignment = randomBetween(9, 13);
+				alignment = randomBetween(9, 15);
 				value = Math.pow(2, randomBetween(0, 7));
 			} else if (base == 'o') {
-				alignment = randomBetween(3, 7);
+				alignment = randomBetween(3, 9);
 				value = randomChoice([1, 8]) * randomBetween(1, 7);
 			} else {
-				alignment = randomBetween(3, 7);
+				alignment = randomBetween(3, 9);
 				value = randomChoice([1, 16]) * randomBetween(1, 15);
 			}
 
@@ -302,8 +302,8 @@ export default [
 		}
 	},
 	{
-		ident: 'combo',
-		name: 'Combo',
+		ident: 'positional-alignment',
+		name: 'Positional & Alignment',
 		description: [
 			"Alignment and positional parameters meet at last, for better or for worse.",
 			"Hope you know what <code>$</code> does!"
@@ -343,9 +343,9 @@ export default [
 		}
 	},
 	{
-		ident: 'combo2',
-		name: 'Combo 2',
-		description: ["It's Combo but worse."],
+		ident: 'combo',
+		name: 'Combo',
+		description: ["Combining some of the tricks we've learned."],
 		generator: () => {
 			const FILLS = ['0', '1', 'x', '_', ' ', ':', '>', '<', '^', '$'];
 			const ALIGNS = ['<', '>'];
@@ -405,9 +405,9 @@ export default [
 		}
 	},
 	{
-		ident: 'combo3',
-		name: 'Combo 3',
-		description: ["Good luck. Remember everything you've learned."],
+		ident: 'combo2',
+		name: 'Combo 2',
+		description: ["Like Combo but worse >:)"],
 		generator: () => {
 			const FILLS = ['0', '1', 'x', '_', ' ', ':', '>', '<', '^', '$'];
 			const ALIGNS = ['<', '>'];
