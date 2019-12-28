@@ -3,14 +3,14 @@
 		<div
 			id="hamburger"
 			@click="toggleLevelsListVisibility" v-bind:class="{ visible: !levelsListVisible }">
-			<span id="hamburger-icon">&#x2630;</span>
+			<FontAwesomeIcon id="hamburger-icon" icon="bars" />
 		</div>
 		<h1 id="header">Rust <code>format!</code> Game</h1>
 		<section id="levels-list" v-bind:class="{ visible: levelsListVisible }">
 			<h2>Levels</h2>
-			<span
-				id="close"
-				@click="toggleLevelsListVisibility" v-bind:class="{ visible: levelsListVisible }">X</span>
+			<FontAwesomeIcon
+				id="close" icon="times"
+				@click="toggleLevelsListVisibility" v-bind:class="{ visible: levelsListVisible }" />
 			<LevelsList
 				@level-click="changeLevel"
 				v-bind:levels="levels" v-bind:best-time-store="bestTimeStore" v-bind:current-level-ident="currentLevel.ident" />
@@ -204,7 +204,7 @@ body {
 #hamburger-icon {
 	margin-left: 15px;
 
-	font-size: 25px;
+	font-size: 20px;
 }
 
 #close {
@@ -214,7 +214,7 @@ body {
 	top: 20px;
 	right: 20px;
 
-	font-size: 26px;
+	font-size: 20px;
 
 	/* Close button is before the levels list in the DOM, so push it to the top so it's visible */
 	z-index: 999;
