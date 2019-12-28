@@ -104,7 +104,8 @@ html, body {
 }
 
 body {
-	font-family: "Open Sans", sans-serif;
+	/* Stack shamelessly stolen from https://becca.ooo */
+	font-family: "Segoe UI", "-apple-system", "San Francisco", "Helvetica", "Noto Sans", "Geneva", "Helvetica Neue", "Helvetica", "Helvetica Neue LT", "Arial", sans-serif, "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", "Noto Serif";
 }
 
 /*
