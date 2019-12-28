@@ -53,12 +53,14 @@ import('rust-fmt-game-wasm').then((mod) => {
 
 			const paramsString = params.map((param) => paramToString(param)).join(', ');
 			const formatCall = 'format!("' + spec + '", ' + paramsString + ')';
+			const formatCallHTML = 'format!("' + spec.replace(' ', '\u00A0') + '", ' + paramsString + ')';
 
 			return {
 				originalSpec: spec,
 				originalParams: params,
 
 				formatCall: formatCall,
+				formatCallHTML: formatCallHTML,
 				result: result
 			};
 		} catch (e) {

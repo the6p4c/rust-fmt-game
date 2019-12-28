@@ -7,8 +7,8 @@
 		<a v-bind:href="'#' + level.ident" target="_blank" rel="noreferrer noopener" class="permalink">Permalink to this level</a>
 	</template>
 	<template v-else>
-		<code v-if="isStatePlaying" class="problem">{{ variation.formatCall }}</code>
-		<code v-else class="problem"><a v-bind:href="playgroundLink" target="_blank" rel="noreferrer noopener" title="Run in Rust Playground">{{ variation.formatCall }}</a></code>
+		<code v-if="isStatePlaying" class="problem">{{ variation.formatCallHTML }}</code>
+		<code v-else class="problem"><a v-bind:href="playgroundLink" target="_blank" rel="noreferrer noopener" title="Run in Rust Playground">{{ variation.formatCallHTML }}</a></code>
 		<code class="equals">==<a v-if="isStatePlaying" v-bind:href="playgroundLink" class="cheat-link" target="_blank" rel="noreferrer noopener" title="Run in Rust Playground (cheater)"><FontAwesomeIcon icon="external-link-alt" /></a></code>
 		<input
 			v-model="guess" ref="guess"
