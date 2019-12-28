@@ -11,7 +11,7 @@ bestTimeStore.init = (levels) => {
 
 		if (window.localStorage) {
 			const bestTime = window.localStorage.getItem(ident);
-			if (bestTime != null && /^[0-9]$/.test(bestTime)) {
+			if (bestTime != null && /^[0-9]+$/.test(bestTime)) {
 				bestTimeStore.bestTimes[ident] = Number(bestTime);
 			}
 		}
