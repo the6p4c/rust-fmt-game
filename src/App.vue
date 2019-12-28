@@ -137,7 +137,7 @@ body {
 
 @media (min-width: 800px) {
 	#app {
-		grid-template-columns: 200px auto;
+		grid-template-columns: 300px auto;
 		grid-template-areas:
 			"header header"
 			"levels-nav game"
