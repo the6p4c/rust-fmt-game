@@ -4,7 +4,7 @@
 		<h2>{{ levelIndex + 1 }}. {{ level.name }}</h2>
 		<p v-for="line in level.description" v-bind:key="line" v-html="line"></p>
 		<button @click="startLevel">Start</button>
-		<a v-bind:href="'#' + level.ident" class="permalink">Permalink to this level</a>
+		<a v-bind:href="'#' + level.ident" target="blank" class="permalink">Permalink to this level</a>
 	</template>
 	<template v-else>
 		<code v-if="isStatePlaying" class="problem">{{ variation.formatCall }}</code>
