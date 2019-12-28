@@ -16,7 +16,7 @@
 			v-bind:class="{ 'correct': isStateFinished }" v-bind:readonly="isStateFinished">
 		<div class="timer-and-hint">
 			<span class="timer">{{ timerString }}</span>
-			<span class="hint">Stuck? Read the <a href="https://doc.rust-lang.org/std/fmt/index.html" target="blank"><code>std::fmt</code> documentation</a> / <a @click.prevent="reset" href="#">reset</a></span>
+			<span class="hint">Stuck? Read the <a href="https://doc.rust-lang.org/std/fmt/index.html" target="blank"><code>std::fmt</code> documentation</a> &#x00B7; <a @click.prevent="reset" href="#">reset/new problem</a></span>
 		</div>
 		<div v-if="isStateFinished" class="controls">
 			<button @click="replay" class="replay">Generate new &amp; replay</button>
@@ -209,6 +209,7 @@ export default {
 	padding-right: 10px;
 
 	line-height: 200%;
+	font-family: monospace;
 }
 
 .guess.correct {
